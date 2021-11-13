@@ -41,20 +41,16 @@ async function employeeManagementSystem(){
                 viewAllEmployees();
                 break;
             case 'Add Employee':
-                console.log('Add Employee chosen');
-                    addEmployee();
+                addEmployee();
                  break;
             case 'Update Employee Role':
-                console.log('Update role chosen');
                 updateRole();
- 
                 break;
             case 'View All Roles':
-                console.log('View all roles chosen');
                 viewAllRoles();
                 break;
-            case 'Add Role':
-                console.log('Adding a role');
+            case 'Add a Role':
+                addRole();
                 break;
             case 'View All Departments':
                 console.log('View all departments');
@@ -137,6 +133,21 @@ function viewAllRoles(){
     })
 }
 //Add role
+async function addRole(){
+    //get role data from user
+    // const newRole = await inquirer.prompt(questions.addRole);
+    // console.log(newRole)
+    
+    db.query(`SELECT id as value, deptname as name FROM Department`, async(err, departments)=>{
+        const newRole = await inquirer.prompt(questions.addRole(departments));
+        console.log(newRole)
+        db.query(`INSERT INTO Roles SET ?`, newRole, function(err){
+            if (err) throw err;
+            console.log("Role successfully updated!")
+            employeeManagementSystem();
+        })
+    })
+}
 
 //View all Departments
 function viewAllDepartments(){

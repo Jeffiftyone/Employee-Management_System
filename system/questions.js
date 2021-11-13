@@ -14,7 +14,8 @@ module.exports = {
             "Quit"
         ]
     },
-    addEmployee: (roles, managers) => [{
+    addEmployee: (roles, managers) => [
+        {
             type: "input",
             message: "What is your employee's first name?",
             name: "first_name",
@@ -42,10 +43,11 @@ module.exports = {
         message: "What is the name of your department?",
         name: "department_name",
     },
-    addRole: [{
+    addRole: (departments) => [
+        {
             type: "input",
             message: "What is the title of your new role?",
-            name: "titleRole",
+            name: "title",
         },
         {
             type: "input",
@@ -53,13 +55,15 @@ module.exports = {
             name: "salary",
         },
         {
-            type: "input",
+            type: "list",
             message: "What is the department id for this role?",
-            name: "departmentIDrole",
+            name: "department_id",
+            choices: departments
         }
     ],
 
-    updateRole: (employees, roles)=>[{
+    updateRole: (employees, roles)=>[
+        {
         type: "list",
         message: "Which Employee would you like to update?",
         name: "id",
