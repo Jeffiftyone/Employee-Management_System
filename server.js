@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 function init(){
-    console.log('Welcome to the Employee Management System');
+    console.log('Initializing App...');
      const ems=employeeManagementSystem();
 }
 

@@ -11,6 +11,7 @@ module.exports = {
             "Add a Role",
             "Add Department",
             "View All Departments",
+            "View Total Utilized Budget",
             "Quit"
         ]
     },
@@ -41,7 +42,7 @@ module.exports = {
     addDepartment: {
         type: "input",
         message: "What is the name of your department?",
-        name: "department_name",
+        name: "deptname",
     },
     addRole: (departments) => [
         {
@@ -74,6 +75,14 @@ module.exports = {
         message: "What Role would you like to give them?",
         name: "role_id",
         choices: roles,
+    }
+],
+    viewBudget:(departments)=> [
+        {
+        type:"list",
+        message:"Which Departent's Budget would you like to view?",
+        name:"id",
+        choices:departments,
     }
 ]
     

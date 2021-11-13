@@ -2,30 +2,6 @@ const inquirer = require('inquirer');
 const {db}= require('./connection');
 const questions = require('./questions');
 
-// const mainMenu = 
-//     {
-//         type:'list',
-//         name:'mainSelect',
-//         message:'What would you like to do?',
-//         default:'Use Arrow Keys',
-//         choices:['View All Employees','Add Employee','Update Employee Role','View all Roles','Add Role','View all Departments','Add Department','Quit'],
-//     }
-
-  
-
-
-function getRoles(result){
-    questions[4].choices=[];
-    result.forEach(element => {
-        questions[4].choices.push(element.id+':'+element.title);
-    });
-
-}
-
-function getManagers(){
-
-}
-
 function quitApp(){
     process.exit();
 }
@@ -55,9 +31,13 @@ async function employeeManagementSystem(){
             case 'View All Departments':
                 console.log('View all departments');
                 viewAllDepartments();
-                    break;
+                break;
             case 'Add Department':
                 console.log('Adding a Department');
+                addDepartment();
+                break;
+            case 'View Total Utilized Budget':
+                viewBudget();
                 break;
             case 'Quit':
                 console.log('Exiting application');
@@ -143,7 +123,7 @@ async function addRole(){
         console.log(newRole)
         db.query(`INSERT INTO Roles SET ?`, newRole, function(err){
             if (err) throw err;
-            console.log("Role successfully updated!")
+            console.log("Role successfully added!")
             employeeManagementSystem();
         })
     })
@@ -159,5 +139,27 @@ function viewAllDepartments(){
 }
 
 //Add Department
+async function addDepartment(){
+    const newDept = await inquirer.prompt(questions.addDepartment);
+    console.log(newDept)
+    db.query(`INSERT INTO Department SET ?`, newDept, function(err){
+        if (err) throw err;
+        console.log("Department successfully added!")
+        employeeManagementSystem();
+    })
+}
 
+//view budget
+async function viewBudget(){
+    db.query(`SELECT id as value, deptname as name FROM Department`, async(err, departments)=>{
+        const selectedDept = await inquirer.prompt(questions.viewBudget(departments));
+        //console.log(selectedDept);
+        db.query(`    SELECT Department.deptname as Department, SUM(salary) as Budget FROM Employees JOIN Roles on Employees.role_id=Roles.id
+        JOIN Department ON Roles.department_id = Department.id WHERE Department.id =? `, selectedDept.id, function(err,result){
+            if (err) throw err;
+            console.table(result);
+            employeeManagementSystem();
+        })
+    })
+}
 module.exports={employeeManagementSystem}
