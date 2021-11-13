@@ -46,6 +46,7 @@ async function employeeManagementSystem(){
                  break;
             case 'Update Employee Role':
                 console.log('Update role chosen');
+                updateRole();
  
                 break;
             case 'View All Roles':
@@ -88,12 +89,13 @@ function viewAllEmployees(){
 //add employee
 async function addEmployee(){
     //get managers list from database
-    db.query(`SELECT id as value, first_name, last_name FROM Employees
+    db.query(`SELECT id as value, CONCAT(first_name," ",last_name) as name FROM Employees
     WHERE manager_id IS NULL`, async(err, managers)=>{
         //get the roles list from database
         db.query(`SELECT id as value, title as name FROM Roles`, async(err,roles)=>{
             //get new employee info from user
             const addEmp = await inquirer.prompt(questions.addEmployee(roles,managers));
+            console.log(addEmp);
             db.query(`INSERT INTO Employees SET ?`, addEmp, function(err){
                 if (err) throw err;
                 console.log("Employee successfully added!")
@@ -106,6 +108,25 @@ async function addEmployee(){
 }
 
 //update Employee Role
+async function updateRole() {
+    //get employee list from database
+    db.query(`SELECT id as value, CONCAT(first_name," ",last_name) as name FROM Employees`, async(err,employees)=>{
+        //get roles list from database
+        db.query(`SELECT id as value, title as name FROM Roles`, async(err,roles)=>{
+            //get params from user
+            const updateEmp = await inquirer.prompt(questions.updateRole(employees,roles));
+            // console.log(updateEmp);
+            // console.log(updateEmp.id);
+            // console.log(updateEmp.role_id);
+             db.query(`UPDATE Employees SET role_id=? WHERE id= ?`, [updateEmp.role_id, updateEmp.id], function(err){
+                 if (err) throw err;
+                 console.log("Role successfully updated!")
+                 employeeManagementSystem();
+             });
+        })
+    });
+
+}
 
 //View all Roles
 function viewAllRoles(){

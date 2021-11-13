@@ -26,7 +26,7 @@ module.exports = {
         },
         {
             type: "list",
-            message: "What is your employee's roleID?",
+            message: "What is your employee's role?",
             name: "role_id",
             choices: roles
         },
@@ -58,5 +58,20 @@ module.exports = {
             name: "departmentIDrole",
         }
     ],
+
+    updateRole: (employees, roles)=>[{
+        type: "list",
+        message: "Which Employee would you like to update?",
+        name: "id",
+        choices: employees,
+    },
+    {
+        type: "list",
+        message: "What Role would you like to give them?",
+        name: "role_id",
+        choices: roles,
+    }
+]
+    
  
 }
