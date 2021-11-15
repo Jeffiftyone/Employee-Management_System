@@ -1,5 +1,5 @@
 # Employee_Management_System
-=============================
+
 
 ## Description
 An application used to add, view, and update employees in a given database using mySQL with sequelize and Node.js with inquirer.
@@ -19,9 +19,9 @@ To install necessary dependencies, run the following command:
 
 ## Usage
 This application must be run in Node
-The user is able to select options displayed in the Terminal using arrow buttons and the 'Enter' Key
+The user is able to select options displayed in the Terminal using arrow buttons and the 'Enter' Key  
 ![Startup](./assets/images/startup.PNG)  
-After completion of an option, the user is able to choose again from the following options until they decide to exit the application by choosing 'Quit'
+After completion of an option, the user is able to choose again from the following options until they decide to exit the application by choosing 'Quit'  
 ![view](./assets/images/viewEmp.PNG)
 
 ## License
