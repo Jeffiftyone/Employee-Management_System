@@ -29,7 +29,7 @@ After completion of an option, the user is able to choose again from the followi
 This project is licensed under the MIT license.
 
 ## Links 
-Repo: https://github.com/Jeffiftyone/Fitness_Tracker7
+Repo: https://github.com/Jeffiftyone/Fitness_Tracker7  
 Video Demo: https://watch.screencastify.com/v/vb8DCN0JuYGsYC2Kqd4t
 
 ## Questions
